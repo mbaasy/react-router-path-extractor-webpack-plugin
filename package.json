@@ -1,0 +1,41 @@
+{
+  "name": "react-router-path-extractor-webpack-plugin",
+  "version": "0.0.1",
+  "description": "Webpack plugin to extract paths from React Router",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard && node test/index.js"
+  },
+  "author": {
+    "name": "Mbaasy, Inc",
+    "email": "hello@mbaasy.com",
+    "url": "https://mbaasy.com"
+  },
+  "contributors": [
+    {
+      "name": "Marc Greenstock",
+      "email": "marc@mbaasy.com",
+      "url": "https://github.com/marcgreenstock"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mbaasy/react-router-path-extractor-webpack-plugin.git"
+  },
+  "keywords": [
+    "webpack",
+    "react router",
+    "paths"
+  ],
+  "dependencies": {
+    "lodash.flattendeep": "^4.4.0",
+    "memory-fs": "^0.3.0"
+  },
+  "devDependencies": {
+    "react": "^15.3.0",
+    "react-router": "^2.6.1",
+    "standard": "^7.1.2",
+    "webpack": "^1.13.2"
+  }
+}
