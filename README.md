@@ -4,10 +4,12 @@ Designed to work with [StaticSiteGeneratorWebpackPlugin](https://github.com/mark
 
 ## Usage
 
+#### webpack.config.js
 ```javascript
-import ReactRouterPathExtractorWebpackPlugin from 'react-router-path-extractor-webpack-plugin'
-import StaticSiteGeneratorWebpackPlugin from 'static-site-generator-webpack-plugin'
-import SitemapPlugin from 'sitemap-webpack-plugin'
+var webpack = require('webpack')
+var ReactRouterPathExtractorWebpackPlugin = require('react-router-path-extractor-webpack-plugin')
+var StaticSiteGeneratorWebpackPlugin = require('static-site-generator-webpack-plugin')
+var SitemapPlugin = require('sitemap-webpack-plugin')
 
 module.exports = webpack({
   entry: {
@@ -36,7 +38,7 @@ module.exports = webpack({
        [
          '/',
          '/about',
-         '/contact'
+         '/about/contact'
        ]
        Apply the paths to plugins that require them:
       */
@@ -47,15 +49,40 @@ module.exports = webpack({
 })
 ```
 
+#### routes.js
+```javascript
+import React from 'react'
+import { Route, IndexRoute } from 'react-router'
+import App from './components/App'
+import Home from './components/Home'
+import About from './components/About'
+import Contact from './components/Contact'
+
+// Important: Your routes must be a named export called "routes":
+export const routes = (
+  // You can Route and PlainRoute together
+  <Route path='/' component={App} >
+    <IndexRoute component={Home} title='Home' />
+    <Route path='about'>
+      <IndexRoute component={About} title='About' />
+      <Route path='contact' component={Contact} title='Contact' />
+    </Route>
+  </Route>
+)
+
+// You can always export the routes as default too
+export default routes
+```
+
 ## Limitations
 
 This plugin does not work with [Dynamic Routing](https://github.com/reactjs/react-router/blob/1.0.x/docs/guides/advanced/DynamicRouting.md).
 
 ## Roadmap
 
-- [ ] Add test coverage
-- [ ] Handle error pages
-- [ ] Handle Dynamic routing
+- [ ] [Add test coverage](https://github.com/mbaasy/react-router-path-extractor-webpack-plugin/issues/1)
+- [ ] [Handle error pages](https://github.com/mbaasy/react-router-path-extractor-webpack-plugin/issues/2)
+- [ ] [Handle dynamic routing](https://github.com/mbaasy/react-router-path-extractor-webpack-plugin/issues/3)
 
 ## Report an Issue
 

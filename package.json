@@ -4,7 +4,7 @@
   "description": "Webpack plugin to extract paths from React Router",
   "main": "index.js",
   "scripts": {
-    "test": "standard && node test/index.js"
+    "test": "standard"
   },
   "author": {
     "name": "Mbaasy, Inc",
