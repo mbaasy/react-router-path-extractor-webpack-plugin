@@ -30,7 +30,7 @@ function extractPathFromRoute (route, prefix = '') {
 }
 
 function flattenPaths (routes) {
-  flattenDeep(extractPathFromRoute(routes))
+  return flattenDeep(extractPathFromRoute(routes))
 }
 
 function ReactRouterPathExtractorWebpackPlugin (routesFile, plugins) {
