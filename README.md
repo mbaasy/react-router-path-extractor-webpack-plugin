@@ -1,21 +1,31 @@
-# ReactRouterPathExtractorWebpackPlugin
+# React Router Path Extractor Webpack Plugin
 
 [![Build Status](https://travis-ci.org/mbaasy/react-router-path-extractor-webpack-plugin.svg?branch=master)](https://travis-ci.org/mbaasy/react-router-path-extractor-webpack-plugin) [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 ## Introduction
 
-This plugin is esigned to work with [StaticSiteGeneratorWebpackPlugin](https://github.com/markdalgleish/static-site-generator-webpack-plugin) and [SitemapPlugin](https://github.com/markdalgleish/static-site-generator-webpack-plugin). It has no standalone functionality other than to precompile a [React Router](https://github.com/reactjs/react-router) routes file and pass the discovered `paths` into a callback.
+This plugin is designed to work with [StaticSiteGeneratorWebpackPlugin](https://github.com/markdalgleish/static-site-generator-webpack-plugin) and [SitemapPlugin](https://github.com/markdalgleish/static-site-generator-webpack-plugin). It has no standalone functionality other than to precompile a [React Router](https://github.com/reactjs/react-router) routes file and pass the discovered `paths` into a callback function.
 
-The callback expects an array of plugins to be returned.
+The callback function expects a return value consisting of an array of webpack plugins to be applied to your compiler once the paths have been resolved.
+
+## How it works
+
+It adds a [`make`](http://webpack.github.io/docs/plugins.html#make-parallel) plugin to separately compile your routes file using the `loaders` specified in your config.
+
+Once compiled it executes the code in a [`vm`](https://nodejs.org/api/vm.html) and runs [`ReactRouter.createRoutes`](https://github.com/reactjs/react-router/blob/master/docs/API.md#createroutesroutes) on the `module.exports.routes` named export. Finally it executes the callback function, passing the flattened paths into it.
+
+The compiler respects your loaders and is indifferent to how you build your routes. i.e. you can use a combination of [`<Route>`](https://github.com/reactjs/react-router/blob/master/docs/API.md#route) and [`PlainRoute`](https://github.com/reactjs/react-router/blob/master/docs/API.md#plainroute) to describe your routes.
 
 ## Usage
+
+Have a look at [test suite](test) for a complete example.
 
 #### webpack.config.js
 ```javascript
 var webpack = require('webpack')
 var ReactRouterPathExtractorWebpackPlugin = require('react-router-path-extractor-webpack-plugin')
 var StaticSiteGeneratorWebpackPlugin = require('static-site-generator-webpack-plugin')
-var SitemapPlugin = require('sitemap-webpack-plugin')
+var SitemapWebpackPlugin = require('sitemap-webpack-plugin')
 
 module.exports = webpack({
   entry: {
@@ -38,7 +48,7 @@ module.exports = webpack({
     }]
   },
   plugins: [
-    new ReactRouterPathExtractorWebpackPlugin('./src/routes.js', (paths) => [
+    new ReactRouterPathExtractorWebpackPlugin('./src/routes.js', function (paths) {
       /*
        The callback receives a flat array of paths, e.g.
        [
@@ -46,11 +56,15 @@ module.exports = webpack({
          '/about',
          '/about/contact'
        ]
-       Apply the paths to plugins that require them:
+
+       Return an array of path dependent webpack plugins in the callback and let
+       them do all the hard work:
       */
-      new StaticSiteGeneratorWebpackPlugin('main', paths),
-      new SitemapPlugin('http://example.com', paths)
-    ])
+      return [
+        new StaticSiteGeneratorWebpackPlugin('main', paths),
+        new SitemapWebpackPlugin('http://example.com', paths)
+      ]
+    })
   ]
 })
 ```
@@ -65,8 +79,8 @@ import About from './components/About'
 import Contact from './components/Contact'
 
 // Important: Your routes must be a named export called "routes":
+// es5: module.exports.routes = ...
 export const routes = (
-  // You can Route and PlainRoute together
   <Route path='/' component={App}>
     <IndexRoute component={Home} title='Home' />
     <Route path='about'>
@@ -76,7 +90,7 @@ export const routes = (
   </Route>
 )
 
-// You can always export the routes as default too
+// You can always export the routes as default too for use elsewhere.
 export default routes
 ```
 
@@ -93,7 +107,7 @@ This plugin does not work with [Dynamic Routing](https://github.com/reactjs/reac
 ## Report an Issue
 
 * [Bugs](https://github.com/mbaasy/react-router-path-extractor-webpack-plugin/issues)
-* Contact the author: [hello@mbaasy.com](hello@mbaasy.com)
+* Contact the author: <hello@mbaasy.com>
 
 ## MIT License
 
