@@ -43,9 +43,9 @@
   "standard": {
     "parser": "babel-eslint"
   },
-  "files": {
+  "files": [
     "index.js"
-  },
+  ],
   "dependencies": {
     "lodash.flattendeep": "^4.4.0",
     "memory-fs": "^0.3.0"
