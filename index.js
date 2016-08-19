@@ -1,7 +1,6 @@
 'use strict'
 
 var vm = require('vm')
-var path = require('path')
 var flattenDeep = require('lodash.flattendeep')
 var MemoryFileSystem = require('memory-fs')
 var createRoutes = require('react-router').createRoutes
@@ -39,11 +38,13 @@ function ReactRouterPathExtractorWebpackPlugin (routesFile, plugins) {
 }
 
 ReactRouterPathExtractorWebpackPlugin.prototype.apply = function (compiler) {
-  compiler.plugin('make', (compilation, callback) => {
+  var self = this
+  compiler.plugin('make', function (compilation, callback) {
     new Promise((resolve, reject) => {
       const routesCompiler = webpack({
+        context: compiler.context,
         entry: {
-          routes: [path.join(compiler.context, this.routesFile)]
+          routes: [self.routesFile]
         },
         output: {
           path: '/',
@@ -54,7 +55,7 @@ ReactRouterPathExtractorWebpackPlugin.prototype.apply = function (compiler) {
         }
       })
       var fs = routesCompiler.outputFileSystem = new MemoryFileSystem()
-      routesCompiler.run((err, stats) => {
+      routesCompiler.run(function (err, stats) {
         if (err) { return reject(err) }
         try {
           var source = fs.readFileSync('/routes.js').toString()
@@ -72,8 +73,8 @@ ReactRouterPathExtractorWebpackPlugin.prototype.apply = function (compiler) {
     .catch(callback)
     .then(flattenPaths)
     .catch(callback)
-    .then((paths) => {
-      this.plugins(paths).forEach((plugin) => {
+    .then(function (paths) {
+      self.plugins(paths).forEach(function (plugin) {
         plugin.apply(compiler)
       })
       callback()
