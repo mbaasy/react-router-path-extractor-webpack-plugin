@@ -29,9 +29,9 @@ const compiler = webpack({
     }]
   },
   plugins: [
-    new ReactRouterPathExtractorWebpackPlugin('./app/routes.js', (paths) => ([
+    new ReactRouterPathExtractorWebpackPlugin('./app/routes.js', (paths) => [
       new StaticSiteGeneratorWebpackPlugin('main', paths)
-    ]))
+    ])
   ]
 })
 const fs = compiler.outputFileSystem = new MemoryFileSystem()

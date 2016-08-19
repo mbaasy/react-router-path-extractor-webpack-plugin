@@ -1,6 +1,12 @@
 # ReactRouterPathExtractorWebpackPlugin
 
-Designed to work with [StaticSiteGeneratorWebpackPlugin](https://github.com/markdalgleish/static-site-generator-webpack-plugin) and [SitemapPlugin](https://github.com/markdalgleish/static-site-generator-webpack-plugin).
+[![Build Status](https://travis-ci.org/mbaasy/react-router-path-extractor-webpack-plugin.svg?branch=master)](https://travis-ci.org/mbaasy/react-router-path-extractor-webpack-plugin) [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+
+## Introduction
+
+This plugin is esigned to work with [StaticSiteGeneratorWebpackPlugin](https://github.com/markdalgleish/static-site-generator-webpack-plugin) and [SitemapPlugin](https://github.com/markdalgleish/static-site-generator-webpack-plugin). It has no standalone functionality other than to precompile a [React Router](https://github.com/reactjs/react-router) routes file and pass the discovered `paths` into a callback.
+
+The callback expects an array of plugins to be returned.
 
 ## Usage
 
@@ -61,7 +67,7 @@ import Contact from './components/Contact'
 // Important: Your routes must be a named export called "routes":
 export const routes = (
   // You can Route and PlainRoute together
-  <Route path='/' component={App} >
+  <Route path='/' component={App}>
     <IndexRoute component={Home} title='Home' />
     <Route path='about'>
       <IndexRoute component={About} title='About' />
