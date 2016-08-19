@@ -1,6 +1,6 @@
 # React Router Path Extractor Webpack Plugin
 
-[![Build Status](https://travis-ci.org/mbaasy/react-router-path-extractor-webpack-plugin.svg?branch=master)](https://travis-ci.org/mbaasy/react-router-path-extractor-webpack-plugin) [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![Build Status](https://travis-ci.org/mbaasy/react-router-path-extractor-webpack-plugin.svg?branch=master)](https://travis-ci.org/mbaasy/react-router-path-extractor-webpack-plugin) [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/) [![dependencies Status](https://david-dm.org/mbaasy/react-router-path-extractor-webpack-plugin/status.svg)](https://david-dm.org/mbaasy/react-router-path-extractor-webpack-plugin) [![devDependencies Status](https://david-dm.org/mbaasy/react-router-path-extractor-webpack-plugin/dev-status.svg)](https://david-dm.org/mbaasy/react-router-path-extractor-webpack-plugin?type=dev)
 
 ## Introduction
 
