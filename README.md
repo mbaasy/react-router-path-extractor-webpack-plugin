@@ -86,7 +86,7 @@ This plugin does not work with [Dynamic Routing](https://github.com/reactjs/reac
 
 ## Roadmap
 
-- [ ] [Add test coverage](https://github.com/mbaasy/react-router-path-extractor-webpack-plugin/issues/1)
+- [x] [Add test coverage](https://github.com/mbaasy/react-router-path-extractor-webpack-plugin/issues/1)
 - [ ] [Handle error pages](https://github.com/mbaasy/react-router-path-extractor-webpack-plugin/issues/2)
 - [ ] [Handle dynamic routing](https://github.com/mbaasy/react-router-path-extractor-webpack-plugin/issues/3)
 
