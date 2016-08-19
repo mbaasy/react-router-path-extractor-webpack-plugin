@@ -16,6 +16,16 @@ Once compiled it executes the code in a [`vm`](https://nodejs.org/api/vm.html) a
 
 The compiler respects your loaders and is indifferent to how you build your routes. i.e. you can use a combination of [`<Route>`](https://github.com/reactjs/react-router/blob/master/docs/API.md#route) and [`PlainRoute`](https://github.com/reactjs/react-router/blob/master/docs/API.md#plainroute) to describe your routes.
 
+## Signature
+
+```javascript
+new ReactRouterPathExtractorWebpackPlugin(
+  routesFile: String|{routesFile: String, errorPath?: String},
+  options?: {errorPath?: String},
+  callback: (paths: Array<String>) => Array<InstanceOfPlugin>
+)
+```
+
 ## Usage
 
 Have a look at [test suite](test) for a complete example.
@@ -48,23 +58,27 @@ module.exports = webpack({
     }]
   },
   plugins: [
-    new ReactRouterPathExtractorWebpackPlugin('./src/routes.js', function (paths) {
-      /*
-       The callback receives a flat array of paths, e.g.
-       [
-         '/',
-         '/about',
-         '/about/contact'
-       ]
+    new ReactRouterPathExtractorWebpackPlugin(
+      './src/routes.js',
+      {errorPath: 'notFound'},
+      function (paths) {
+        /*
+         The callback receives a flat array of paths, e.g.
+         [
+           '/',
+           '/about',
+           '/about/contact'
+         ]
 
-       Return an array of path dependent webpack plugins in the callback and let
-       them do all the hard work:
-      */
-      return [
-        new StaticSiteGeneratorWebpackPlugin('main', paths),
-        new SitemapWebpackPlugin('http://example.com', paths)
-      ]
-    })
+         Return an array of path dependent webpack plugins in the callback and let
+         them do all the hard work:
+        */
+        return [
+          new StaticSiteGeneratorWebpackPlugin('main', paths),
+          new SitemapWebpackPlugin('http://example.com', paths)
+        ]
+      }
+    )
   ]
 })
 ```
@@ -77,6 +91,7 @@ import App from './components/App'
 import Home from './components/Home'
 import About from './components/About'
 import Contact from './components/Contact'
+import NotFound from './components/NotFound'
 
 // Important: Your routes must be a named export called "routes":
 // es5: module.exports.routes = ...
@@ -87,6 +102,9 @@ export const routes = (
       <IndexRoute component={About} title='About' />
       <Route path='contact' component={Contact} title='Contact' />
     </Route>
+    // A catch all will resolve to /{options.errorPath}/index.html
+    // Default is /404/index.html
+    <Route path='*' component={NotFound} />
   </Route>
 )
 
@@ -101,7 +119,7 @@ This plugin does not work with [Dynamic Routing](https://github.com/reactjs/reac
 ## Roadmap
 
 - [x] [Add test coverage](https://github.com/mbaasy/react-router-path-extractor-webpack-plugin/issues/1)
-- [ ] [Handle error pages](https://github.com/mbaasy/react-router-path-extractor-webpack-plugin/issues/2)
+- [x] [Handle error pages](https://github.com/mbaasy/react-router-path-extractor-webpack-plugin/issues/2)
 - [ ] [Handle dynamic routing](https://github.com/mbaasy/react-router-path-extractor-webpack-plugin/issues/3)
 
 ## Report an Issue

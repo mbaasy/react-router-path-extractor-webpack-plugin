@@ -6,20 +6,24 @@ var MemoryFileSystem = require('memory-fs')
 var createRoutes = require('react-router').createRoutes
 var webpack = require('webpack')
 
-function extractPathFromRoute (route, prefix = '') {
+function extractPathFromRoute (route, prefix, options) {
   if (!route) {
     return []
   } else if (Array.isArray(route)) {
     return route.map(function (route) {
-      return extractPathFromRoute(route, prefix)
+      return extractPathFromRoute(route, prefix, options)
     })
   } else if (!route.path) {
     return []
+  } else if (prefix === '/' && route.path === '*') {
+    return [options.errorPath]
   }
+
   var path = prefix + route.path
   var children = extractPathFromRoute(
     route.childRoutes,
-    path === '/' ? path : path + '/'
+    path === '/' ? path : path + '/',
+    options
   )
   if (route.component) {
     return [path].concat(children)
@@ -29,18 +33,43 @@ function extractPathFromRoute (route, prefix = '') {
 }
 
 function flattenPaths (routes) {
-  return flattenDeep(extractPathFromRoute(routes))
+  return flattenDeep(extractPathFromRoute(routes, '', this.options))
 }
 
-function ReactRouterPathExtractorWebpackPlugin (routesFile, plugins) {
-  this.routesFile = routesFile
-  this.plugins = plugins
+function ReactRouterPathExtractorWebpackPlugin (routesFile, options, plugins) {
+  if (typeof routesFile === 'object') {
+    this.options = routesFile
+    this.routesFile = this.options.routesFile
+    this.plugins = options
+  } else if (typeof routesFile === 'string') {
+    this.routesFile = routesFile
+    if (typeof options === 'function') {
+      this.options = {}
+      this.plugins = options
+    } else {
+      this.options = options
+      this.plugins = plugins
+    }
+  }
+  if (!this.routesFile) {
+    throw new Error('routesFile is required')
+  }
+  if (typeof this.routesFile !== 'string') {
+    throw new Error('routesFile must be a string')
+  }
+  if (typeof this.options !== 'object') {
+    throw new Error('options must be an object')
+  }
+  if (typeof this.plugins !== 'function') {
+    throw new Error('plugins must be a function')
+  }
+  this.options.errorPath = this.options.errorPath || '404'
 }
 
 ReactRouterPathExtractorWebpackPlugin.prototype.apply = function (compiler) {
   var self = this
   compiler.plugin('make', function (compilation, callback) {
-    new Promise((resolve, reject) => {
+    new Promise(function (resolve, reject) {
       const routesCompiler = webpack({
         context: compiler.context,
         entry: {
@@ -71,7 +100,7 @@ ReactRouterPathExtractorWebpackPlugin.prototype.apply = function (compiler) {
     .catch(callback)
     .then(createRoutes)
     .catch(callback)
-    .then(flattenPaths)
+    .then(flattenPaths.bind(self))
     .catch(callback)
     .then(function (paths) {
       self.plugins(paths).forEach(function (plugin) {
