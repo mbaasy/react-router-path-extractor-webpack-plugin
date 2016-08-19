@@ -1,6 +1,6 @@
 {
   "name": "react-router-path-extractor-webpack-plugin",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Webpack plugin to extract paths from React Router",
   "main": "index.js",
   "scripts": {
@@ -25,10 +25,13 @@
   },
   "keywords": [
     "webpack",
+    "plugin",
     "react",
     "react router",
     "paths",
-    "static html"
+    "routes",
+    "static",
+    "html"
   ],
   "babel": {
     "presets": [
@@ -39,6 +42,9 @@
   },
   "standard": {
     "parser": "babel-eslint"
+  },
+  "files": {
+    "index.js"
   },
   "dependencies": {
     "lodash.flattendeep": "^4.4.0",
