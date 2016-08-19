@@ -4,7 +4,7 @@
   "description": "Webpack plugin to extract paths from React Router",
   "main": "index.js",
   "scripts": {
-    "test": "standard"
+    "test": "standard && mocha --compilers js:babel-register"
   },
   "author": {
     "name": "Mbaasy, Inc",
@@ -25,17 +25,41 @@
   },
   "keywords": [
     "webpack",
+    "react",
     "react router",
-    "paths"
+    "paths",
+    "static html"
   ],
+  "babel": {
+    "presets": [
+      "react",
+      "es2015",
+      "stage-0"
+    ]
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  },
   "dependencies": {
     "lodash.flattendeep": "^4.4.0",
     "memory-fs": "^0.3.0"
   },
   "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.13.2",
+    "babel-eslint": "^6.1.2",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-register": "^6.11.6",
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2",
     "react": "^15.3.0",
+    "react-dom": "^15.3.0",
     "react-router": "^2.6.1",
     "standard": "^7.1.2",
+    "static-site-generator-webpack-plugin": "^2.1.0",
     "webpack": "^1.13.2"
   }
 }
