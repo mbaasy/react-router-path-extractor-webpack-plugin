@@ -31,7 +31,7 @@ describe('ReactRouterPathExtractorWebpackPlugin', () => {
     let error = null
 
     before(function (done) {
-      this.timeout(5000)
+      this.timeout(0)
       compiler.run((err, stats) => {
         error = err
         done()
