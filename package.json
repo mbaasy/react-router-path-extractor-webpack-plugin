@@ -4,8 +4,8 @@
   "description": "Webpack plugin to extract paths from React Router",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config ./test/webpack.config.js",
-    "build": "webpack --config ./test/webpack.config.js",
+    "example": "webpack-dev-server --config ./test/webpack.config.js",
+    "build:example": "webpack --config ./test/webpack.config.js",
     "test": "standard && mocha --compilers js:babel-register"
   },
   "author": {
