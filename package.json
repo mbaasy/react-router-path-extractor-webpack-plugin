@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --config ./test/webpack.config.js",
     "build": "webpack --config ./test/webpack.config.js",
-    "test": "mocha --compilers js:babel-register"
+    "test": "standard && mocha --compilers js:babel-register"
   },
   "author": {
     "name": "Mbaasy, Inc",
