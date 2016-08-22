@@ -60,7 +60,6 @@ module.exports = webpack({
   plugins: [
     new ReactRouterPathExtractorWebpackPlugin(
       './src/routes.js',
-      {errorPath: 'notFound'},
       function (paths) {
         /*
          The callback receives a flat array of paths, e.g.
