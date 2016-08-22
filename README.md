@@ -102,9 +102,14 @@ export const routes = (
       <IndexRoute component={About} title='About' />
       <Route path='contact' component={Contact} title='Contact' />
     </Route>
-    // A catch all will resolve to /{options.errorPath}/index.html
-    // Default is /404/index.html
-    <Route path='*' component={NotFound} />
+    // Exclude paths by adding the staticExclude prop:
+    <Route path='exclude_this_path' staticExclude>
+      // Child routes will included unless staticExclude is specified.
+      <Route path='but_not_this_one' />
+    </Route>
+    // This catch-all will resolve to /error/index.html
+    // staticName will default to '404', i.e. /404/index.html
+    <Route path='*' component={NotFound} staticName='error' />
   </Route>
 )
 
@@ -112,15 +117,9 @@ export const routes = (
 export default routes
 ```
 
-## Limitations
+## Dynamic Routing
 
-This plugin does not work with [Dynamic Routing](https://github.com/reactjs/react-router/blob/1.0.x/docs/guides/advanced/DynamicRouting.md).
-
-## Roadmap
-
-- [x] [Add test coverage](https://github.com/mbaasy/react-router-path-extractor-webpack-plugin/issues/1)
-- [x] [Handle error pages](https://github.com/mbaasy/react-router-path-extractor-webpack-plugin/issues/2)
-- [ ] [Handle dynamic routing](https://github.com/mbaasy/react-router-path-extractor-webpack-plugin/issues/3)
+[Dynamic Routing](https://github.com/reactjs/react-router/blob/1.0.x/docs/guides/advanced/DynamicRouting.md) may be possible using a hashHistory Router within a Route component or by adding a catch-all and a bit nginx config. Example coming soon.
 
 ## Report an Issue
 

@@ -21,7 +21,7 @@ const template = (html, assets) => (`
   </head>
   <body>
     <div id='outlet'>${html}</div>
-    <script src='${assets.main}'></script>
+    <script src='/${assets.main}'></script>
   </body>
 </html>
 `)

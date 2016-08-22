@@ -2,11 +2,11 @@
 
 import React, { Component } from 'react'
 
-export default class NotFound extends Component {
+export default class NestedPath extends Component {
   render () {
     return (
       <div>
-        <h1>404</h1>
+        <h1>Nested Path</h1>
       </div>
     )
   }
