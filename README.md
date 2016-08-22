@@ -20,8 +20,8 @@ The compiler respects your loaders and is indifferent to how you build your rout
 
 ```javascript
 new ReactRouterPathExtractorWebpackPlugin(
-  routesFile: String|{routesFile: String, errorPath?: String},
-  options?: {errorPath?: String},
+  routesFile: String|{routesFile: String},
+  options?: {routesFile?: String},
   callback: (paths: Array<String>) => Array<InstanceOfPlugin>
 )
 ```
