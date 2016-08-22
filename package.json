@@ -1,6 +1,6 @@
 {
   "name": "react-router-path-extractor-webpack-plugin",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Webpack plugin to extract paths from React Router",
   "main": "index.js",
   "scripts": {
